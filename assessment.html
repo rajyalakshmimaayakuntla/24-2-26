@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #sty {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            width: 150px;
+            padding: 10px;
+            background-color: rgb(217, 244, 245);
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+        }
+        #show{
+            width:200px;
+            height: 100px;
+            background-color: wheat;
+            display: flex;
+            flex-wrap: wrap;
+        }
+</style>
+<div id="sty"></div>
+<div id="show"></div>
+<body>
+   
+    <script>
+
+var http = new XMLHttpRequest();
+http.open("GET", "https://dummyjson.com/products", true);
+http.send();
+
+http.onload = function() {
+
+    var data = JSON.parse(http.responseText);
+    var pro = data.products;
+
+    for (let i = 0; i < pro.length; i++) {
+
+        var c = document.createElement("div");
+        c.className = "card";
+
+        var t = document.createElement("h4");
+        t.innerText = pro[i].title;
+
+        var im = document.createElement("img");
+        im.src = pro[i].images[0];
+
+        var b = document.createElement("button");
+        b.innerText = "Show Details";
+
+        b.onclick = function(){
+
+            var show = document.getElementById("show");
+            show.innerHTML = "";  
+
+            var newCard = document.createElement("div");
+            newCard.className = "card";
+
+            var newTitle = document.createElement("h3");
+            newTitle.innerText = pro[i].title;
+
+            var newImg = document.createElement("img");
+            newImg.src = pro[i].images[0];
+            newImg.style.width = "120px";
+
+            newCard.appendChild(newImg);
+            newCard.appendChild(newTitle);
+
+            show.appendChild(newCard);
+        };
+
+        c.appendChild(im);
+        c.appendChild(t);
+        c.appendChild(b);
+
+        document.getElementById("sty").appendChild(c);
+    }
+}
+      
+    </script>
+</body>
+
+</html>
